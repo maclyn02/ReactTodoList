@@ -9,17 +9,17 @@
 }
 
 .Modal {
-  display: 'flex';
-  justify-content: 'center';
-  align-items: 'center';
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .EditForm {
   height: 200px;
   width: 600px;
   padding: 30px;
-  display: 'flex';
-  flex-direction: 'column';
-  justify-content: 'center';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: antiquewhite;
 }
