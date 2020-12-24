@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input } from '@material-ui/core';
 import './App.css';
 import Todo from './Todo';
+import db from './firebase'
+import firebase from 'firebase'
 
 function App() {
   // Setup state for list of todos using 'useState' Hook -> short term memory
@@ -11,22 +13,43 @@ function App() {
   // Setup state for the description field
   const [descriptionInput, setDescriptionInput] = useState('')
 
+  // onload functionality to read from database
+  // useEffect runs once when the page loads(or when a field(if provided as argument in []) refreshes)
+  useEffect(() => {
+    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+      setTodos(snapshot.docs.map(doc => (
+          {
+            'title': doc.data().title,
+            'description': doc.data().description
+          })
+      ))
+    })
+  }, [])
+
+
   // Setup onclick add event
   const addTodo = (event) => {
     // Prevent page from refreshing when form is submitted
     event.preventDefault()
     // execute this part of code when 'SAVE' button is clicked
-    setTodos([
-        ...todos, 
-        {
-          'title': titleInput,
-          'description': descriptionInput
-      }])
+    db.collection('todos').add({
+      title: titleInput,
+      description: descriptionInput,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+
+    // setTodos([
+    //     ...todos, 
+    //     {
+    //       'title': titleInput,
+    //       'description': descriptionInput
+    //   }])
+
     // clear input after submitting
     setTitleInput('')
     setDescriptionInput('')
   }
-
+  
   // Stuff to render
   return (
     <div className="App">
