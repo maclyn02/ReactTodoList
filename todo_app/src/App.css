@@ -1,3 +1,14 @@
 .App {
-  text-align: center;
-}
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+  }
+
+.DescriptionInput {
+    width: 70%;
+  }
+
+.TodoForm {
+    display: flex;
+    justify-content: space-between;
+  }
