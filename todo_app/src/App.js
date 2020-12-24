@@ -1,6 +1,7 @@
 import { Button, FormControl, Input } from '@material-ui/core';
 import React, { useState } from 'react';
 import './App.css';
+import Todo from './Todo';
 
 function App() {
   // Setup state for list of todos using 'useState' Hook -> short term memory
@@ -35,8 +36,8 @@ function App() {
       <div>
         <ul>
           {/* Loop through the todos set in useState */}
-          {todos.map(todo => (
-            <li>{todo}</li>
+          {todos.map((todo, index) => (
+            <Todo todo={todo} key={index} />
           ))
           }
         </ul>
