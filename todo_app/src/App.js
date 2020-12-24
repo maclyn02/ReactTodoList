@@ -17,11 +17,13 @@ function App() {
   // useEffect runs once when the page loads(or when a field(if provided as argument in []) refreshes)
   useEffect(() => {
     db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setTodos(snapshot.docs.map(doc => (
-          {
+      setTodos(snapshot.docs.map(doc => ({
+        id: doc.id,
+        data: {
             'title': doc.data().title,
             'description': doc.data().description
-          })
+          }
+        })
       ))
     })
   }, [])
@@ -65,8 +67,8 @@ function App() {
       </form>
       <div>
         {/* Loop through the todos set in useState */}
-        {todos.map((todo, index) => (
-          <Todo title={todo.title} description={todo.description} key={index} />
+        {todos.map((todo) => (
+          <Todo title={todo.data.title} description={todo.data.description} key={todo.id} id={todo.id} />
         ))
         }
       </div>
