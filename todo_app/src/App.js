@@ -21,7 +21,8 @@ function App() {
         id: doc.id,
         data: {
             'title': doc.data().title,
-            'description': doc.data().description
+            'description': doc.data().description,
+            'completed': doc.data().completed
           }
         })
       ))
@@ -37,7 +38,8 @@ function App() {
     db.collection('todos').add({
       title: titleInput,
       description: descriptionInput,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      completed: false
     })
 
     // setTodos([
@@ -68,7 +70,7 @@ function App() {
       <div>
         {/* Loop through the todos set in useState */}
         {todos.map((todo) => (
-          <Todo title={todo.data.title} description={todo.data.description} key={todo.id} id={todo.id} />
+          <Todo title={todo.data.title} description={todo.data.description} completed={todo.data.completed} key={todo.id} id={todo.id} />
         ))
         }
       </div>

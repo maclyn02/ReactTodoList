@@ -23,6 +23,17 @@ function Todo(props) {
         setOpen(false)
     }
 
+    const toggleTaskState = () => {
+
+        let state = props.completed
+
+        // Fired when checkbox is clicked to update completed to true
+        db.collection('todos').doc(props.id).set({
+            completed: !state,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true })
+    }
+
     const handleOpen = () => {
         setOpen(true)
     }
@@ -35,11 +46,11 @@ function Todo(props) {
     return (
         <div className="Todo">
             <List>
-                <ListItem button onClick={handleOpen}>
+                <ListItem button>
                 <ListItemIcon>
-                    <Checkbox edge="start" />
+                    <Checkbox edge="start" onClick={toggleTaskState} />
                 </ListItemIcon>
-                <ListItemText primary={props.title} secondary={props.description}/>
+                <ListItemText onClick={handleOpen} primary={props.title} secondary={props.description} className={ props.completed ? 'CompletedTaskText' : null}/>
                 <ListItemSecondaryAction>
                     <IconButton edge="end" onClick={event => db.collection('todos').doc(props.id).delete()} >
                         <DeleteIcon />
@@ -51,11 +62,17 @@ function Todo(props) {
                 <div>
                     <form className='EditForm'>
                         <h2>Edit</h2>
-                        <Input className='Elements' value={titleInput} onChange={event => setTitleInput(event.target.value)} />
-                        <Input className='Elements' value={descriptionInput} onChange={event => setDescriptionInput(event.target.value)} />
-                        <Button className='Elements' disabled={!titleInput} variant="contained" color="primary" type="submit" onClick={updateTodo}>
-                            Save
-                        </Button>
+                        <div>
+                            <Input value={titleInput} onChange={event => setTitleInput(event.target.value)} />
+                        </div>
+                        <div>
+                            <Input value={descriptionInput} onChange={event => setDescriptionInput(event.target.value)} />
+                        </div>
+                        <div>
+                            <Button disabled={!titleInput} variant="contained" color="primary" type="submit" onClick={updateTodo}>
+                                Save
+                            </Button>
+                        </div>
                     </form>
                 </div>
             </Modal>

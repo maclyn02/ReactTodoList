@@ -4,8 +4,21 @@
     text-align: center;
 }
 
-.Elements {
-  margin: 10px,
+.EditForm {
+  height: 200px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: linen;
+}
+
+.EditForm>div {
+  margin: 10px;
+}
+
+.EditForm Input, .EditForm Button {
+  width: 600px;
 }
 
 .Modal {
@@ -14,12 +27,6 @@
   align-items: center;
 }
 
-.EditForm {
-  height: 200px;
-  width: 600px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: antiquewhite;
+.CompletedTaskText {
+  text-decoration: line-through;
 }
